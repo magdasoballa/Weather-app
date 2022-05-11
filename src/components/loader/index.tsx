@@ -1,3 +1,10 @@
+import CircularProgress from "@mui/material/CircularProgress";
+import "./loader.scss";
+
 export const Loader = () => {
-  return <div>Loader</div>;
+  return (
+    <div className="loader-wrapper">
+      <CircularProgress />
+    </div>
+  );
 };

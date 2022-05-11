@@ -1,8 +1,10 @@
-import { createTheme, ThemeProvider, Typography } from "@mui/material";
 import { useState } from "react";
+import { createTheme, ThemeProvider, Typography } from "@mui/material";
+import { Searcher, Loader } from "./components";
+import { Tiles } from "./components/tiles";
+import { convertDataFromApi } from "./helpers";
+import { WeatherData } from "./interfaces";
 import "./App.scss";
-import { Searcher, Tile, Loader, DatePicker } from "./components";
-import WeatherData from "./interfaces";
 
 export const theme = createTheme({
   typography: {
@@ -14,12 +16,15 @@ export const theme = createTheme({
 const App = () => {
   const [isPending, setIsPending] = useState(false);
   const [value, setValue] = useState("");
-  const [data, setData] = useState<WeatherData | undefined>();
+  const [notFound, setNotFound] = useState(false);
+  const [data, setData] = useState<WeatherData>();
+  const appId = "91ad49c742f0f69cffb9a715ff90686d";
 
   const getWeather = () => {
     setIsPending(true);
+    setNotFound(false);
     fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=3&appid=91ad49c742f0f69cffb9a715ff90686d`
+      `http://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=3&appid=${appId}`
     )
       .then((res) => res.json())
       .then((res) => {
@@ -27,6 +32,9 @@ const App = () => {
         const lon = res[0]?.lon;
         if (lat && lon) {
           getWeatherForCity(lat, lon);
+        } else {
+          setNotFound(true);
+          setIsPending(false);
         }
       })
       .catch((e) => {
@@ -37,11 +45,10 @@ const App = () => {
 
   const getWeatherForCity = (lat: number, lon: number) => {
     fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=91ad49c742f0f69cffb9a715ff90686d`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${appId}`
     )
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         setValue("");
         setData(res);
       })
@@ -67,7 +74,14 @@ const App = () => {
           setValue={setValue}
           data={data}
         />
-        <Tile />
+        {isPending ? (
+          <Loader />
+        ) : (
+          <div>
+            <Tiles data={convertDataFromApi(data)} city={data?.city?.name} />
+          </div>
+        )}
+        {notFound && <div>City not found</div>}
       </div>
     </ThemeProvider>
   );
