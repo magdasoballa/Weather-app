@@ -1,16 +1,52 @@
+.time-of-day-wrapper {
+  .time-title {
+    font-size: 17px;
+    border-radius: 4px;
+    margin-top: 15px;
+    width: 80%;
+    display: flex;
+    svg {
+      margin-left: 5px;
+      fill: rgba(255, 240, 0, 0.7);
+    }
+  }
+  .time-of-day-section {
+    line-height: 20px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    .amount-data {
+      font-size: 16px;
+      margin-left: 5px;
+      font-weight: 700;
+    }
+  }
+}
+
 .tile-wrapper {
   width: 200px;
   height: 300px;
   border: 1px solid white;
-  .main-title {
-  }
-  .time-of-day-wrapper {
-    .time-title {
-    }
-    .time-of-day-section {
-    }
-  }
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+  min-height: 370px;
+  margin-bottom: 10px;
+  box-shadow: 0px 0px 3px 3px #f2e1f2;
 
-  .no-data-message {
+  &:hover {
+    transform: scale(1.1);
+  }
+  .main-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 18px;
+    svg {
+      margin-right: 5px;
+    }
   }
 }

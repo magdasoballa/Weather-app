@@ -34,7 +34,7 @@ export const changeKelwinToCelsius = (kelwin: number) => {
 };
 
 export const convertDataFromApi = (
-  weatherData: WeatherData | undefined
+  weatherData: WeatherData | null
 ): WeatherForOneDay[] => {
   if (!weatherData?.list) {
     return [];
@@ -44,10 +44,9 @@ export const convertDataFromApi = (
   const timeDataObject: TimeData = {};
 
   weatherData.list.forEach((item: WeatherDataItem) => {
-    console.log(item, "sss");
     const date = new Date(item?.dt * 1000);
     const momentDate = moment(date);
-    const formattedDate = momentDate.format("YYYY-MM-DD");
+    const formattedDate = momentDate.format("DD-MM-YYYY");
     const formattedTime = momentDate.format("HH:mm");
     const hour = momentDate.format("HH");
     const tempMax = item?.main?.temp_max;

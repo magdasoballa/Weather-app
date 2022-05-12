@@ -1,5 +1,5 @@
 export interface WeatherDataItem {
-  dt: any;
+  dt: number;
   clouds: { all: number };
   main: {
     feels_like: number;

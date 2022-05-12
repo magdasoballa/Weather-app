@@ -1,0 +1,19 @@
+.tiles-wrapper {
+  font-family: "Acme", sans-serif;
+  width: 100vw;
+
+  .city-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 0;
+    font-size: 25px;
+  }
+  .tiles {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}
